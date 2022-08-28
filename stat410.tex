@@ -2437,7 +2437,7 @@ P(|X-M|\geq k)&=P((X-M)^2\geq k^2)\\
 \end{align*}
 \end{proof}
 \includegraphics[scale=0.5]{figures/chebycheus}
-\chapter[Random Sample and Statistic]{Random Sample and Statistic}
+\chapter[Random Sample, Statistic, and Central Limit Theorem]{Random Sample and Statistic}
 Given a population, we can uses a random variable to analyze the information about this characteristic remains fixed once the population of interest is identified.\\
 However, calculating the number is usually not possible due to the following \\
  \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
@@ -2787,4 +2787,208 @@ x                & 0   & 1     \\ \hline
 $p_{X_{(4)}}(x)$ & $q$ & $1-q$ \\ \hline
 \end{tabular}
 \end{center}
+
+\section[Central Limit Theorem]{\color{DarkOrchid}Central Limit Theorem}
+If we want to calculate the sampling distribution of a statistic while it is not possible to know the exact sampling distribution, we want to approximate it. Note that as the size of the random sample increases, there are some  "limiting" behavior of the statistic.\\
+\hfill\\
+Suppose $\{X_1,X_2,X_3,\cdots,X_n\}$ is a random sample from the population distribution X. We have \begin{align*}
+\text{sample mean}&:=\bar{x}=\frac{X_1+X_2+\cdots+X_n}{n}\\
+\text{sample total}&:=T_o=X_1+X_2+\cdots+X_n
+\end{align*}
+Now, if $M_X:=E(X)$, $\sigma_X^2:=V(X)$, then:\begin{align*}
+E(\bar{X})&=E\left(\frac{X_1+X_2+\cdots+X_n}{n} \right)\\
+&=\frac{E(X_1)+E(X_2)+\cdots+E(X_n)}{n}\\
+&=\frac{M_X+M_X+\cdots+M_X}{n}=M_X
+\end{align*}
+Also:\begin{align*}
+V(\bar{X})&=V\left(\frac{X_1+X_2+\cdots+X_n}{n} \right)\\
+&=\frac{1}{n^2}V\left(X_1+X_2+\cdots+X_n\right)\\
+&=\frac{1}{n^2}\left(\sum_{i=1}^n V(X_i)+2\sum_{i\leq <j \leq n}Cov(X_iX_j) \right)\\
+&\text{Since }X_1,\cdots,X_n,\text{ are mutally independent}\\
+&=\frac{1}{n^2}\cdot \sum_{i=1}^n V(X_i)\\
+&=\frac{1}{n^2}\cdot n \cdot \sigma_X^2\\
+&=\frac{\sigma^2}{n}
+\end{align*}
+Similarly, we can show that \begin{align*}
+E(T_o)&=nM_X\\
+V(T_o)&=n\sigma_X^2
+\end{align*}
+Now: We want to calculate the sampling distribution of $\bar{X}$ and $T_o$. Note that the Theorem $3.1$ of Uniqueness of Moment Generating Functions from Chapter 6 tell us if two random variables have the same moment generating functions, they are identically distributed .\\
+\hfill\\
+If $X\sim Binom(n,p)$ with random sample of size $m$. Then \begin{align*}
+M_X(t)&=\left( pe^t+(1-p)\right)^b\\
+M_{T_o}(t)&=\left( pe^t+(1-p)\right)^{mn} \implies T_o\sim Binom(nm,p)\\
+M_{\bar{X}}(t)&=\left(pe^{\frac{t}{m}}+(1-p) \right)^{nm}\implies \text{Not clear the distribution just from the mgf}
+\end{align*}
+If $X\sim N(M,\sigma^2)$ with random sample of size $n$\begin{align*}
+M_{X}(t)&=e^{Mt+\frac{\sigma^2t^2}{2}}\\
+M_{T_o}(t)&=e^{nMt+\frac{n\sigma^2t^2}{2}}\implies T_o\sim N(nM,n\sigma^2)\\
+M_{\bar{X}}(t)&=e^{Mt+\frac{\sigma^2}{n}\frac{t^2}{2}}\implies T_o\sim N(M,\frac{\sigma^2}{n})\\
+\end{align*}
+\begin{defn}
+Let $X,Y$ be sets. Consider $\{f_n:X\to Y\}$ to be a set of functions. \\
+We say $\{f_n\}$ \textbf{converges pointwise} to a function  $f:X\to Y$ provided that $\{f_n(t)\}$ converges to $f(t)$ for all $t\in X$
+\end{defn}
+\begin{defn} 
+We say a sequence of random variable $X_1,X_2,X_3,\cdots$ \textbf{converges in distribution} to a random variable X if \begin{align*}
+F_{X_n}(u) \longrightarrow F_{X}(u) \text{ for all }u\in \R
+\end{align*}
+i.e $\{F_{X_n}\}$ converges pointwise for $F_X$\\
+where \begin{align*}
+&F_{X_n}  \text{is the cumulative density function of }X_n\\
+&F_{X}\text{ is the cumulative density function of X}
+\end{align*}
+\end{defn}
+\begin{thm}
+Suppose $\{X_n\}$ is a sequence of random variables with \begin{align*}
+\text{cumlative density function is }  F_{X_n}(t)\\
+\text{moment generating function is } M_{X_n}(t)\\
+\end{align*}
+Suppose that \begin{align*}
+\lim_{n\rightarrow \infty} M_{X_n}(t) \rightarrow M_X(t) \text{\qquad for }t\in \text{some neighbourhood of }0  
+\end{align*}
+i.e $M_{X_n}(t)$ converges pointwise to $M_X(t)$.\\
+\hfill\\
+Then, there is a unique cumulative density function $F_X$ whose moments are determined by $M_X(t)$, and for all $x$ where $F_X(x)$ is continuous, we have \begin{align*}
+\lim_{n\rightarrow \infty}F_{X_{n}}(x)&= F_X(x)
+\end{align*}
+i.e the pointwise convergence of moment generating functions is the pointwise convergence of cumulative functions which is the convergence in distribution.
+\end{thm}
+\begin{thm}\textbf{Binomial Approximation of Poisson}\\
+Suppose $X_n\sim Binom(n,p)$ and say $X\sim Pois(\lambda )$. If $n\to \infty$ and $p\to \infty$ such that $np=\lambda$, then \begin{center}
+$X_n$ converges to distribution $X$
+\end{center}
+\end{thm}
+\begin{proof}
+Show that \begin{align*}
+\lim_{\substack{n\to \infty \\ n\cdot p=\lambda}}M_{X_n}(t)=M_X(t)
+\end{align*}
+Given that \begin{align*}
+M_{X_n}(t)&=\left(pe^t+(1-p) \right)^n\text{ }&X_n\sim Binom(n,p)\\
+M_X(t)&=e^{\lambda(e^t-1)}&\text{ }X\sim Pois(\lambda)
+\end{align*}
+\end{proof}
+We want to show that for fixed t, \begin{align*}
+\lim_{\substack{n\to \infty\\ n\cdot p =\lambda}}\left( pe^t+(1-p)\right)^n&=e^{\lambda(e^t-1)}
+\end{align*}
+From calculus, we know that if $\{a_n\}$ is a sequence such that $a_n\to a$, then \begin{align*}
+\lim_{n\to \infty}\left( 1+\frac{a_n}{n}\right)^n&=e^a
+\end{align*}
+Therefore, \begin{align*}
+\lim_{\substack{n\to \infty\\ n\cdot p =\lambda}}\left( pe^t+(1-p)\right)^n&=\lim_{n\to \infty}\left(\frac{\lambda}{n}\cdot e^t+\left( 1-\frac{\lambda}{n}\right) \right)^n\\
+&=\lim_{n\to \infty}\left(1+\frac{\lambda\left(e^t-1 \right)}{n} \right)^n\\
+&=e^{\lambda (e^t-1)}\\
+&\text{It is moment generatin function of }Pois(\lambda)
+\end{align*}
+\begin{thm}
+\textbf{Central Limit Theorem}\\
+Suppose $X_1,X_2,X_3,\cdots$ is a sequence of independent and identically distributed random variables coming from a population distribution X. Assume \begin{enumerate}
+\item $E(X)=M$ and $V(X)=\sigma_X^2<\infty$, i.e finite variance.
+\item $M_X(t)$ is the moment generating function of X exists for all $t\in (-\delta, \delta)$ for some $\delta >0$
+\end{enumerate}
+We define: \begin{align*}
+\text{nth sample mean}&:=\bar{X_n}=\frac{X_1+x_@+\cdots+X_n}{n}\\
+Y_n&:=\frac{\bar{X_n}-M}{\frac{\sigma}{\sqrt{n}}}=\sqrt{n}\left(\frac{\bar{X_n}-M}{\sigma}\right)\\
+G_n(u)&:=\text{ cumulative density function of }Y_n
+\end{align*}
+Then,\begin{center}
+$G_n(u)$ converges in distribution to $N(0,1)$
+\end{center}
+i.e \begin{align*}
+\lim_{n\to \infty}G_n(u)&=\int_{-\infty}^{u}\frac{1}{\sqrt{2\pi}}e^{\frac{-t^2}{2}}dt=F_Z(u)
+\end{align*}
+\end{thm}
+\note The central limit theorem says that: \begin{enumerate}
+\item The standardized nth sample mean converges in distribution to the standardized normal distribution. 
+\item The nth sample mean is a good estimator for the population parameter $M$
+\end{enumerate}
+\begin{proof}
+We want to show that $M_{Y_n}(t)$ converges pointwise to $M_{Z}(t)=e^{\frac{t^2}{2}} \implies$ $Y_n$ converges in distribution to Z. \\
+\hfill\\
+First we want to figure out $M_{Y_n}(t)$. Suppose $Z_i:=\frac{X_i-M}{\sigma},$ then\begin{align*}
+Y_n&=\sqrt{n}\left(\frac{\bar{X_n}-M}{\sigma} \right)\\
+&=\sqrt{n}\left( \frac{\frac{X_1+X_2+\cdots+X_n}{n}-M}{\sigma}\right)\\
+&=\sqrt{n}\left( \frac{X_1+X_2+\cdots +X_n-nM}{n\sigma}\right)\\
+&=\left( \frac{X_1+X_2+\cdots +X_n-nM}{\sqrt{n}\sigma}\right)\\
+&=\frac{1}{\sqrt{n}}\left(  \frac{X_1+X_2+\cdots +X_n-nM}{\sigma}\right)\\
+&=\frac{1}{\sqrt{n}}\left(\frac{X_1-M}{\sigma}+\frac{X_2-M}{\sigma}+\cdots +\frac{X_n-M}{\sigma} \right)\\
+&\text{Recall the definition of }Z_i\\
+&=\frac{1}{\sqrt{n}}\left(Z_1+Z_2+\cdots+Z_i\right)\\
+&=\frac{1}{\sqrt{n}}\sum_{i=1}^{n}Z_i
+\end{align*}
+Now we want to find the moment generating function of $Y_n$\begin{align*}
+M_{Y_n}(t)&=M_{\frac{1}{\sqrt{n}}\sum_{i=1}^{n}Z_i}(t)
+\end{align*}
+Since $X_1,\cdot,X_n$ are independent and identically distributed, $Z_1,Z_2,\cdot,Z_n$ are independent and identically distributed to the random variable $\frac{X-M}{\delta}=Z$, therefore \begin{align*}
+M_{Z_i}(t)&=M_{\left(\frac{X-M}{\delta}\right)}(t) \forall i
+\end{align*}
+Then, \begin{align*}
+M_{Y_n}(t)&=\prod_{i=1}^{n}M_{Z_i}\left(\frac{t}{\sqrt{n}} \right)\\
+&=\prod_{i=1}^nM_{Z}\left(\frac{t}{\sqrt{n}}\right)\\
+&=M_{Z}\left(\frac{t}{\sqrt{n}}\right)^n
+\end{align*}
+Now we want to show that $M_{Y_n}(t)$ converges pointwise to $e^{\frac{t^2}{2}}$\\
+\hfill\\
+We need to state this in terms of calculus. So we want to first find the Taylor series expansion of $M_Z(t)$ about 0.\begin{align*}
+&M_Z(0)+\frac{d}{dt}\left. \left(M_Z(t) \right)\right|_{t=0}\cdot t +\frac{1}{2}\frac{d^2}{dt^2}\left. \left(M_Z(t) \right)\right|_{t=0}\cdot t^2+\text{higher order terms}\\
+=&E(1)+E(Z)\cdot t+V(Z)\cdot \frac{t^2}{2}+\text{higher order terms}\\
+=&1+E\left(\frac{X-M}{\sigma} \right)\cdot t+V\left(\frac{X-M}{\sigma}\right)\cdot \frac{t^2}{2}+\text{higher order terms}\\
+=&1+\frac{E(X)-M}{\sigma}\cdot t+\frac{V(X)}{\sigma^2}\cdot\frac{t^2}{2}+\text{higher order terms}\\
+=&1+0+ \frac{t^2}{2}+\text{higher order terms}\\
+=&1+\frac{t^2}{2}+\text{higher order terms}
+\end{align*}
+Recall that the \textbf{Taylor's Theorem} stated that if g is a function such that $g^{(n)}(x)$ exists, then \begin{align*}
+\lim_{x\to a}\frac{g(x)-T_n(x)}{(x-a)^n}=0
+\end{align*}
+where \begin{align*}
+T_n(x)&=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{n!}(x-a)^n
+\end{align*}
+which is the $nth$ Taylor polynomial at $x=a$.\\
+\hfill\\
+From the Taylor series expansion we got above, we have that $T_2(t)$ of $M_Z(t)$ is given as \begin{align*}
+T_2(t)&=1+\frac{t^2}{2}
+\end{align*}
+Suppose $r_2(t)=M_Z(t)-T_2(t)$. Using the Taylor's Theorem, we have \begin{align*}
+\lim_{t\to 0}\frac{M_Z(t)-T_2(t)}{t^2}&=0\\
+\lim_{t\to 0}\frac{r_2(t)}{t^2}&=0\\
+\text{i.e }\lim_{t\to 0}r_2(t)&=0
+\end{align*}
+Putting all together, now we can show that $M_{Y_n}(t)$ converges pointwise to $e^{\frac{t^2}{2}}$\begin{align*}
+\lim_{n\to \infty}\left(M_Z\left( \frac{t}{\sqrt{n}}\right)\right)&=\lim_{n\to \infty}\left( T_2\left( \frac{t}{\sqrt{n}}\right)+r_2\left(\frac{t}{\sqrt{n}} \right)\right)^n\\
+&=\lim_{n\to \infty}\left( 1+\frac{\left(\frac{t}{\sqrt{n}}\right)^2}{2}+r_2\left(\frac{t}{\sqrt{n}} \right)\right)^n\\
+&=\lim_{n\to \infty}\left( 1+\frac{1}{n}\frac{t^2}{2}+r_2\left(\frac{t}{\sqrt{n}} \right)\right)^n\\
+&=\lim_{n\to \infty}\left( 1+\frac{t^2}{n}\left(\frac{1}{2}+\frac{n}{t^2}r_2\left(\frac{t}{\sqrt{n}}\right) \right)\right)^n\\
+&=\lim_{n\to \infty}\left( 1+\frac{t^2}{n}\left(\frac{1}{2}+\frac{r_2\left(\frac{t}{\sqrt{n}}\right)}{\left(\frac{t}{\sqrt{n}}\right)^2} \right)\right)^n\\
+\end{align*}
+Note that \begin{align*}
+&\lim_{n\to \infty}\left(\frac{1}{2}+\frac{r_2\left(\frac{t}{\sqrt{n}}\right)}{\left(\frac{t^2}{\sqrt{n}}\right)} \right)\\
+=&\lim_{n\to \infty}\left(\frac{1}{2} \right)+\frac{1}{t^2}\lim_{n\to \infty}\left( \frac{r_2\left( \frac{t}{\sqrt{n}}\right) }{\frac{1}{\sqrt{n}}}\right)\\
+&\text{let }k=\frac{1}{\sqrt{n}}\text{ then }n\to \infty \implies k\to 0\\
+=&\frac{1}{2}+\frac{1}{t^2}\lim_{k\to 0}\left(\frac{r_2(tk)}{k} \right)\\
+& \text{We know that }\lim_{t\to 0}\frac{r_2(t)}{t^2}=0\\
+=&\frac{1}{2}
+\end{align*}
+Let $a_n(t)=t^2\left(\frac{1}{2} +\frac{r_2\left(\frac{t}{\sqrt{n}} \right)}{\left( \frac{t}{\sqrt{n}}\right)^2}\right)$.  And we know $a_n(t)$ converges to $\frac{t^2}{2}$ for fixed t.\\
+Therefore, we got\begin{align*}
+&\lim_{n\to \infty}\left(1+\frac{t^2}{n}\left(\frac{1}{2}+\frac{r_2\frac{t}{\sqrt{n}}}{\left( \frac{t}{\sqrt{n}}\right)^2} \right)\right)^n \\
+=&\lim_{n\to \infty}\left(1+\frac{a_n(t)}{n}\right)^n&\\
+&\text{Since }a_n(t) \rightarrow \frac{t^2}{2}\\
+=&e^{\frac{t^2}{2}}
+\end{align*}
+Therefore, \begin{align*}
+M_{Y_n}(t) \longrightarrow e^{\frac{t^2}{2}}=M_Z(t)
+\end{align*}
+which means that $Y_n$ converges in distribution to $Z$, the standard normal distribution.
+\end{proof}
+\hfill\\
+\textbf{Applications of Central Limit Theorem}\begin{enumerate}
+\item $\bar{X}\overset{\text{approx}}{\sim} N\left(M,\frac{\sigma^2}{n} \right)$, n is the size of random sample
+\item $T_o\overset{\text{approx}}{\sim} N(n\cdot M,n\sigma^2)$, n is the size of random sample
+\item If $X\sim Binom (n,p)$, random sample of size $m$\\
+$T_o \overset{\text{exact}}{\sim}Binom(n\cdot m,p)$\\
+$Y_o \overset{\text{CLT approx}}{\sim} N(mM, m\sigma^2)$ where $M=n\cdot p$ and $\sigma^2=n\cdot p \cdot(1-p)$
+\item If $X\sim Gamma(\alpha,\beta)$, random sample of size n\\
+$T_o \overset{\text{exact}}{\sim} Gamma(n\alpha, \beta)$ \\
+$T_o \overset{\text{CTL approx}}{\sim} N(nM_x,n\sigma_x^2)$, where $M_X=\alpha \beta,$ and $\sigma_X^2=\alpha \beta^2$
+\end{enumerate}
 \end{document}
